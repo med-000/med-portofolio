@@ -1,9 +1,9 @@
 APP_PORT ?= 8080
 MYSQL_USER ?= root
-MYSQL_PASSWORD ?= go-college
+MYSQL_PASSWORD ?= passw0rd
 MYSQL_HOST ?= 127.0.0.1
 MYSQL_PORT ?= 3306
-MYSQL_DATABASE ?= go_college_api
+MYSQL_DATABASE ?= med-portfolio
 
 .PHONY: setup deps install-air build up down restart logs dev local-dev run test tidy
 

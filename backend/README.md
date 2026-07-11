@@ -37,10 +37,10 @@ backend で使う値:
 
 ```env
 MYSQL_USER=root
-MYSQL_PASSWORD=go-college
+MYSQL_PASSWORD=passw0rd
 MYSQL_HOST=127.0.0.1
 MYSQL_PORT=3306
-MYSQL_DATABASE=go_college_api
+MYSQL_DATABASE=med-portfolio
 PORT=8080
 ```
 
@@ -136,9 +136,9 @@ TablePlus などから接続する場合:
 ```text
 Host: 127.0.0.1
 Port: 3306
-Database: go_college_api
+Database: med-portfolio
 User: root
-Password: go-college
+Password: passw0rd
 ```
 
 backend app を Docker コンテナ内で動かす場合、MySQL への接続先は service 名です。
