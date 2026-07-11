@@ -1,0 +1,24 @@
+# Environment files
+.env
+.env.*
+!.env.sample
+
+# Go build/test artifacts
+bin/
+coverage/
+*.cover
+*.test
+
+# Air
+tmp/
+
+# MySQL local data
+db-data/
+
+# Logs
+*.log
+
+# OS/editor
+.DS_Store
+.idea/
+.vscode/

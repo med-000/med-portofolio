@@ -1,0 +1,35 @@
+openapi: 3.0.2
+info:
+  title: med-portfolio
+  description: |-
+    <b>med-portfolio</b><br>
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/
+tags:
+  - name: setting
+    description: 設定関連API
+paths:
+  /setting/get:
+    get:
+      tags:
+        - setting
+      summary: 設定取得API
+      description: |
+        ゲーム設定情報を取得します。まずは定数で定義をしてみましょう。
+        余裕があれば設定値をデータベースで管理できるようにしてみましょう。
+      responses:
+        200:
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SettingGetResponse"
+components:
+  schemas:
+    SettingGetResponse:
+      type: object
+      properties:
+        gachaCoinConsumption:
+          type: integer
+          description: ガチャ1回あたりのコイン消費数

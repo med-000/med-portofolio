@@ -1,0 +1,6 @@
+.env
+db-data
+tmp
+.git
+.DS_Store
+README.md

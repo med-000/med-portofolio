@@ -1,0 +1,48 @@
+name: med-portfolio-app
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      target: dev
+    environment:
+      PORT: "8080"
+      MYSQL_USER: "root"
+      MYSQL_PASSWORD: "go-college"
+      MYSQL_HOST: "mysql"
+      MYSQL_PORT: "3306"
+      MYSQL_DATABASE: "go_college_api"
+    ports:
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - .:/app
+      - go-mod-cache:/go/pkg/mod
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8.0
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_ROOT_PASSWORD: "go-college"
+      MYSQL_DATABASE: "go_college_api"
+    ports:
+      - "127.0.0.1:3306:3306"
+    volumes:
+      - ./db/init:/docker-entrypoint-initdb.d
+      - ./db-data:/var/lib/mysql
+
+  swagger-ui:
+    image: swaggerapi/swagger-ui:latest
+    environment:
+      SWAGGER_JSON: /api/api-document.yaml
+    volumes:
+      - ./api-document.yaml:/api/api-document.yaml:ro
+    ports:
+      - "127.0.0.1:3030:8080"
+
+volumes:
+  go-mod-cache:
+    driver: local
