@@ -5,9 +5,11 @@ MYSQL_HOST ?= 127.0.0.1
 MYSQL_PORT ?= 3306
 MYSQL_DATABASE ?= med-portfolio
 
-.PHONY: setup deps install-air build up down restart logs dev local-dev run test tidy
+.PHONY: setup host-setup deps install-air build up down restart logs dev local-dev run test tidy
 
-setup: deps install-air
+setup: build
+
+host-setup: deps install-air
 
 deps:
 	go get github.com/gin-gonic/gin gorm.io/gorm gorm.io/driver/mysql
@@ -44,7 +46,7 @@ run: up
 	go run ./cmd/app
 
 test:
-	go test ./...
+	docker compose run --rm --no-deps app go test ./...
 
 tidy:
-	go mod tidy
+	docker compose run --rm --no-deps app go mod tidy

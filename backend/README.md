@@ -7,16 +7,20 @@ Go + Gin + GORM + MySQL の backend です。
 backend 配下で実行します。
 
 ```bash
-cd /Users/med/Documents/develop/web/product/med-portfolio/backend
+cd backend
 make setup
 ```
 
-`make setup` では、アプリで使う Go 依存と開発用 CLI の Air を入れます。
+`make setup` では、Go と開発用 CLI の Air を含む backend app の
+Docker image をビルドします。ホスト側に Go や Air をインストールする必要はありません。
+
+必要なのは Docker と Make です。
+
+ホスト側で Go と Air を使って開発する場合だけ、Go をインストールした上で
+次を実行します。
 
 ```bash
-go get github.com/gin-gonic/gin gorm.io/gorm gorm.io/driver/mysql
-go mod tidy
-go install github.com/air-verse/air@latest
+make host-setup
 ```
 
 ## 環境変数
@@ -102,7 +106,8 @@ api-document.yaml
 ## Make コマンド
 
 ```bash
-make setup     # Go依存とAirを入れる
+make setup     # GoとAirを含むbackend appのDocker imageをビルドする
+make host-setup # ホスト側のGo依存とAirを入れる（ホストにGoが必要）
 make build     # backend app コンテナをビルドする
 make dev       # app / mysql / swagger-ui をバックグラウンド起動する
 make local-dev # Dockerサービスを起動し、APIだけローカルのAirで動かす
@@ -111,8 +116,8 @@ make up        # Dockerサービスをバックグラウンド起動する
 make down      # Dockerサービスを停止する
 make restart   # Dockerサービスを再起動する
 make logs      # Dockerログを見る
-make test      # Goテストを実行する
-make tidy      # go mod tidy を実行する
+make test      # Dockerコンテナ内でGoテストを実行する
+make tidy      # Dockerコンテナ内でgo mod tidyを実行する
 ```
 
 `make dev` はログを表示しません。ログを見たい場合だけ次を実行します。
@@ -185,5 +190,7 @@ api-document.yaml                  # OpenAPI 定義
 ## 注意
 
 - backend のコマンドは repository root ではなく `backend/` で実行します。
-- `air` は開発用 CLI なので `go install` で入れます。
+- 通常のDocker開発では、ホスト側へのGoとAirのインストールは不要です。
+- `make host-setup` / `make local-dev` / `make run` はホスト側のGo環境を使います。
+- ホスト開発用の `air` は `make host-setup` でインストールします。
 - `gin` と `gorm` はアプリの依存なので `go get` で `go.mod` に追加します。
